@@ -13,7 +13,7 @@ Factory::Factory(void)
 Factory::~Factory(void) {}
 
 
-IOperand const * Factory::createOperand(eOperand type, std::string const & value) const
+IOperand const * Factory::createOperand(eOperandType type, std::string const & value) const
 {
 	return ((*this.*functions.at(type))(value));
 }
@@ -30,7 +30,7 @@ IOperand const * Factory::createInt8(std::string const & value) const
 		else if (num < std::numeric_limits<int8_t>::min())
 			throw std::underflow_error("Underflow");
 	
-		return (new eOperand<>);
+		return (new eOperand<int8_t>(static_cast<int8_t>(num)));
 	}
 	catch (const std::exception e)
 	{

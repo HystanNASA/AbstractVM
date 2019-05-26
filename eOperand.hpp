@@ -2,29 +2,30 @@
 #define EOPERAND_HPP
 
 
+#include <string>
+#include <sstream>
+#include <iomanip>
+
 #include "IOperand.hpp"
 #include "Factory.hpp"
 
-enum eOperandType
-{
-	Int8,
-	Int16,
-	Int32,
-	Float,
-	Double
-};
-
 template <typename T>
-class eOperand : IOperand
+class eOperand : public IOperand
 {
 private:
 	T value;
+	std::string valueInString;
 
 public:
 	eOperand(void);
 	eOperand(T value);
 	
 	~eOperand(void);
+
+	int			 getPrecision(void) const;
+	eOperandType getType() const;
+
+	std::string const & toString(void) const;
 
 	IOperand const & operator= (eOperand const &rhs) const;
 	IOperand const * operator+ (IOperand const &rhs) const;

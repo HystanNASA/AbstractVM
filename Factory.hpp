@@ -5,7 +5,9 @@
 #include <iostream>
 #include <inttypes.h>
 #include <stdexcept>
+#include <vector>
 
+#include "eOperand.hpp"
 #include "IOperand.hpp"
 
 class Factory
@@ -17,7 +19,7 @@ public:
 	Factory(void);
 	~Factory(void);
 
-	IOperand const * createOperand(eOperand, std::string const &) const;
+	IOperand const * createOperand(eOperandType, std::string const &) const;
 
 private:
 

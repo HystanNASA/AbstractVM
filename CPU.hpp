@@ -12,7 +12,7 @@ const unsigned SIZE_OF_STACK = 15;
 class CPU
 {
 private:
-	std::array<IOperand, SIZE_OF_STACK> stack;
+	std::vector<IOperand> stack;
 	unsigned short	stackPointer;
 	size_t			programPointer;
 
@@ -22,13 +22,12 @@ public:
 	CPU();
 	~CPU();
 
-	void init(void);
 	void run(void);
 
-	void push(eOperand, std::string const &, const short line);
+	void push(eOperandType, std::string const &, const short line);
 	void pop(const short line);
 	void dump(const short line);
-	void assert(eOperand, std::string const &, const short line);
+	void assert(eOperandType, std::string const &, const short line);
 	void add(const short line);
 	void sub(const short line);
 	void mul(const short line);
