@@ -6,6 +6,7 @@
 #include "IOperand.hpp"
 #include "eOperand.hpp"
 #include "Factory.hpp"
+#include "Parser.hpp"
 
 const unsigned SIZE_OF_STACK = 15;
 
@@ -13,16 +14,19 @@ class CPU
 {
 private:
 	std::vector<IOperand> stack;
-	unsigned short	stackPointer;
-	size_t			programPointer;
+	unsigned short		  stackPointer;
+	size_t				  programPointer;
 
 	Factory factory;
+	Parser parser;
 
 public:
-	CPU();
-	~CPU();
+	CPU(void);
+	CPU(std::string);
+	~CPU(void);
 
 	void run(void);
+	void doInstruction(void);
 
 	void push(eOperandType, std::string const &, const short line);
 	void pop(const short line);

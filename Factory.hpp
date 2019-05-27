@@ -6,6 +6,7 @@
 #include <inttypes.h>
 #include <stdexcept>
 #include <vector>
+#include <cfloat>
 
 #include "eOperand.hpp"
 #include "IOperand.hpp"
@@ -22,7 +23,6 @@ public:
 	IOperand const * createOperand(eOperandType, std::string const &) const;
 
 private:
-
 	IOperand const * createInt8(std::string const &) const;
 	IOperand const * createInt16(std::string const &) const;
 	IOperand const * createInt32(std::string const &) const;

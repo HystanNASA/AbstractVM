@@ -38,3 +38,87 @@ IOperand const * Factory::createInt8(std::string const & value) const
 		return 0;
 	}
 }
+
+
+IOperand const * Factory::createInt16(std::string const & value) const
+{
+	try
+	{
+		int64_t num = std::stoll(value);
+
+		if (num > std::numeric_limits<int16_t>::max())
+			throw std::overflow_error("Overflow");
+		else if (num < std::numeric_limits<int16_t>::min())
+			throw std::underflow_error("Underflow");
+
+		return (new eOperand<int16_t>(static_cast<int16_t>(num)));
+	}
+	catch (const std::exception e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+		return 0;
+	}
+}
+
+
+IOperand const * Factory::createInt32(std::string const & value) const
+{
+	try
+	{
+		int64_t num = std::stoll(value);
+
+		if (num > INT32_MAX)
+			throw std::overflow_error("Overflow");
+		else if (num < -INT32_MAX)
+			throw std::underflow_error("Underflow");
+
+		return (new eOperand<int32_t>(static_cast<int16_t>(num)));
+	}
+	catch (const std::exception e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+		return 0;
+	}
+}
+
+
+IOperand const * Factory::createFloat(std::string const & value) const
+{
+	try
+	{
+		int64_t num = std::stoll(value);
+
+		if (num > FLT_MAX)
+			throw std::overflow_error("Overflow");
+		else if (num < -FLT_MAX)
+			throw std::underflow_error("Underflow");
+
+		return (new eOperand<float>(static_cast<float>(num)));
+	}
+	catch (const std::exception e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+		return 0;
+	}
+}
+
+
+IOperand const * Factory::createDouble(std::string const & value) const
+{
+	try
+	{
+		int64_t num = std::stoll(value);
+
+		if (num > DBL_MAX)
+			throw std::overflow_error("Overflow");
+		else if (num < -DBL_MAX)
+			throw std::underflow_error("Underflow");
+
+		return (new eOperand<double>(static_cast<double>(num)));
+	}
+	catch (const std::exception e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+		return 0;
+	}
+}

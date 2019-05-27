@@ -16,7 +16,7 @@ enum eOperandType
 class IOperand
 {
 public:
-	virtual ~IOperand(void) {};
+	virtual ~IOperand(void) {}
 
 	virtual int			 getPrecision(void) const = 0;
 	virtual eOperandType getType(void) const = 0;
