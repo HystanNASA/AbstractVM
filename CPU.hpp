@@ -6,7 +6,7 @@
 #include "IOperand.hpp"
 #include "eOperand.hpp"
 #include "Factory.hpp"
-#include "Parser.hpp"
+#include "Lexer.hpp"
 
 const unsigned SIZE_OF_STACK = 15;
 
@@ -18,7 +18,7 @@ private:
 	size_t				  programPointer;
 
 	Factory factory;
-	Parser parser;
+	Lexer lexer;
 
 public:
 	CPU(void);
@@ -28,16 +28,16 @@ public:
 	void run(void);
 	void doInstruction(void);
 
-	void push(eOperandType, std::string const &, const short line);
-	void pop(const short line);
-	void dump(const short line);
-	void assert(eOperandType, std::string const &, const short line);
-	void add(const short line);
-	void sub(const short line);
-	void mul(const short line);
-	void div(const short line);
-	void mod(const short line);
-	void print(const short line);
+	void push(eOperandType, std::string const &, const int line);
+	void pop(const int line);
+	void dump(const int line);
+	void assert(eOperandType, std::string const &, const int line);
+	void add(const int line);
+	void sub(const int line);
+	void mul(const int line);
+	void div(const int line);
+	void mod(const int line);
+	void print(const int line);
 	void exit(void) const;
 };
 

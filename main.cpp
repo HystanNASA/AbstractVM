@@ -1,10 +1,8 @@
-#include <cassert>
-
 #include "CPU.hpp"
 
 int main(int argc, char* argv[])
 {
-	assert(argc > 2 && argv[1] == "-f");
+	if (argc != 3 && argv[1] != "-f") exit(0);
 
 	CPU cpu(argv[2]);
 	cpu.run();

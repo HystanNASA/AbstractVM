@@ -24,6 +24,9 @@ void Lexer::getFilename(std::string& filename)
 }
 
 
+unsigned int Lexer::getLine(void) { return lineNumber; }
+
+
 Lexer::Instruction Lexer::getInstruction(void)
 {
 	return instruction;
@@ -51,33 +54,95 @@ void Lexer::readLine(void)
 }
 
 
-void Lexer::parse(void)
+InstructionType Lexer::instructionToString(std::string const & instr) const
 {
-
+	if (instr == "push")
+		return InstructionType::push;
+	else if (instr == "pop")
+		return InstructionType::pop;
+	else if (instr == "dump")
+		return InstructionType::dump;
+	else if (instr == "assert")
+		return InstructionType::assert;
+	else if (instr == "add")
+		return InstructionType::add;
+	else if (instr == "sub")
+		return InstructionType::sub;
+	else if (instr == "mul")
+		return InstructionType::mul;
+	else if (instr == "div")
+		return InstructionType::div;
+	else if (instr == "mod")
+		return InstructionType::mod;
+	else if (instr == "print")
+		return InstructionType::print;
+	else if (instr == "exit")
+		return InstructionType::exit;
+	else
+		return InstructionType::error;
 }
 
 
-LexerMessage Lexer::tokenize(void)
+eOperandType Lexer::operandToString(std::string const & operand)
+{
+	if (operand == "int8()")
+		return eOperandType::Int8;
+	else if (operand == "int16()")
+		return eOperandType::Int16;
+	else if (operand == "int32()")
+		return eOperandType::Int32;
+	else if (operand == "float()")
+		return eOperandType::Float;
+	else if (operand == "double()")
+		return eOperandType::Double;
+	else
+	{
+		internalMessage = LexerMessage::NAI;
+		return eOperandType::Double;
+	}
+}
+
+
+void Lexer::parse(void)
+{
+	const std::regex commandsWithoutArgs("^(pop|dump|add|sub|mul|div|mod|print|exit|;;|;)$");
+	const std::regex commandsWithArgsInt("^(push|assert) (int8|int16|int32)\\(([\\-]?[0-9]+)\\)$");
+	const std::regex commandsWithArgsFloatDouble("^(push|assert) (float|double)\\(([\\-]?[0-9]+\\.[0-9]+)\\)$");
+	const std::regex emptyLine("^\\s*$");
+	std::smatch		 result;
+
+	if (std::regex_match(lineFromFile, result, commandsWithoutArgs) || std::regex_match(lineFromFile, result, emptyLine))
+	{
+		instruction.instructionType = instructionToString(result[0]);
+	}
+	else if (std::regex_match(lineFromFile, result, commandsWithArgsInt))
+	{
+		instruction.instructionType = instructionToString(result[0]);
+		instruction.operandType = operandToString(result[1]);
+		instruction.value = result[2].str();
+	}
+	else if (std::regex_match(lineFromFile, result, commandsWithArgsFloatDouble))
+	{
+		instruction.instructionType = instructionToString(result[0]);
+		instruction.operandType = operandToString(result[1]);
+		instruction.value = result[2].str();
+	}
+	else
+		internalMessage = LexerMessage::NAI;
+}
+
+
+LexerMessage Lexer::findInstruction(void)
 {
 	readLine();
 
 	if (internalMessage != LexerMessage::noError)
 		return internalMessage;
 
-	std::string::iterator iterator;
-	for (auto it = lineFromFile.begin(); it != lineFromFile.end(); ++it)
-	{
-		iterator = std::find(it, lineFromFile.end(), '\n');
-
-		if (iterator == lineFromFile.end())
-			break;
-		
-		tokens.push_back("");
-		std::copy(lineFromFile.begin(), iterator, tokens.end());
-	}
-
 	parse();
 
 	if (internalMessage != LexerMessage::noError)
 		return internalMessage;
+
+	return internalMessage;
 }

@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <regex>
 
 #include "IOperand.hpp"
 #include "CPU.hpp"
@@ -47,8 +48,6 @@ private:
 	const std::streamsize bufferSize = 128;
 	std::ifstream readFile;
 
-	std::vector<std::string> tokens;
-
 	Instruction instruction;
 
 	std::string lineFromFile;
@@ -61,7 +60,7 @@ public:
 	Lexer(std::string&);
 	~Lexer(void);
 
-	LexerMessage  tokenize(void);
+	LexerMessage  findInstruction(void);
 	Instruction	  getInstruction(void);
 	unsigned int  getLine(void);
 
@@ -69,6 +68,8 @@ private:
 	void getFilename(std::string&);
 	void readLine(void);
 	void parse(void);
+	InstructionType instructionToString(std::string const &) const;
+	eOperandType operandToString(std::string const &);
 };
 
 

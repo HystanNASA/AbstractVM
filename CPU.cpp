@@ -17,8 +17,8 @@ CPU::~CPU(void) {}
 
 void CPU::run(void)
 {
-	while ()
+	/*while ()
 	{
 
-	}
+	}*/
 }
