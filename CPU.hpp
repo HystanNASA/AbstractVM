@@ -2,11 +2,16 @@
 #define CPU_HPP
 
 #include <array>
+#include <iostream>
+#include <cstdlib>
 
 #include "IOperand.hpp"
 #include "eOperand.hpp"
 #include "Factory.hpp"
 #include "Lexer.hpp"
+
+
+#define PRINT_ERROR_MESSAGE(str) std::cout << str << std::endl;
 
 const unsigned SIZE_OF_STACK = 15;
 
@@ -26,18 +31,18 @@ public:
 	~CPU(void);
 
 	void run(void);
-	void doInstruction(void);
+	bool doInstruction(Instruction const& const, const unsigned line);
 
-	void push(eOperandType, std::string const &, const int line);
-	void pop(const int line);
-	void dump(const int line);
-	void assert(eOperandType, std::string const &, const int line);
-	void add(const int line);
-	void sub(const int line);
-	void mul(const int line);
-	void div(const int line);
-	void mod(const int line);
-	void print(const int line);
+	bool push(eOperandType, std::string const &, const unsigned line);
+	bool pop(const unsigned line);
+	bool dump(const unsigned line);
+	bool assert(eOperandType, std::string const &, const unsigned line);
+	bool add(const unsigned line);
+	bool sub(const unsigned line);
+	bool mul(const unsigned line);
+	bool div(const unsigned line);
+	bool mod(const unsigned line);
+	bool print(const unsigned line);
 	void exit(void) const;
 };
 

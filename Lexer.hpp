@@ -35,16 +35,16 @@ enum class LexerMessage
 	eof
 };
 
+struct Instruction
+{
+	InstructionType instructionType;
+	eOperandType operandType;
+	std::string value;
+};
+
 class Lexer
 {
 private:
-	struct Instruction
-	{
-		InstructionType instructionType;
-		eOperandType operandType;
-		std::string value;
-	};
-
 	const std::streamsize bufferSize = 128;
 	std::ifstream readFile;
 
@@ -63,6 +63,7 @@ public:
 	LexerMessage  findInstruction(void);
 	Instruction	  getInstruction(void);
 	unsigned int  getLine(void);
+	std::string translateMessage();
 
 private:
 	void getFilename(std::string&);

@@ -146,3 +146,18 @@ LexerMessage Lexer::findInstruction(void)
 
 	return internalMessage;
 }
+
+
+std::string Lexer::translateMessage()
+{
+	if (internalMessage == LexerMessage::noError)
+		return std::string("No Error");
+	else if (internalMessage == LexerMessage::badFile)
+		return std::string("Bad File");
+	else if (internalMessage == LexerMessage::eof)
+		return std::string("End Of File");
+	else if (internalMessage == LexerMessage::NAI)
+		return std::string("Not An Instruction");
+	else
+		return std::string("Unknown Error");
+}
