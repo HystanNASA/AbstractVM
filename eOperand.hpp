@@ -22,23 +22,24 @@ public:
 	
 	~eOperand(void);
 
-	int			 getPrecision(void) const;
-	eOperandType getType() const;
+	int					getPrecision(void) const;
+	eOperandType		getType() const;
+	std::string const & getStringValue(void) const;
 
 	std::string const & toString(void) const;
 
-	IOperand const & operator= (eOperand const &rhs) const;
-	IOperand const * operator+ (IOperand const &rhs) const;
-	IOperand const * operator- (IOperand const &rhs) const;
-	IOperand const * operator* (IOperand const &rhs) const;
-	IOperand const * operator/ (IOperand const &rhs) const;
-	IOperand const * operator% (IOperand const &rhs) const;
-	bool			 operator==(IOperand const &rhs) const;
-	bool			 operator>=(IOperand const &rhs) const;
-	bool			 operator<=(IOperand const &rhs) const;
-	bool			 operator!=(IOperand const &rhs) const;
-	bool			 operator>(IOperand const &rhs) const;
-	bool			 operator<(IOperand const &rhs) const;
+	IOperand const & operator= (eOperand const &);
+	IOperand const * operator+ (IOperand const &) const;
+	IOperand const * operator- (IOperand const &) const;
+	IOperand const * operator* (IOperand const &) const;
+	IOperand const * operator/ (IOperand const &) const;
+	IOperand const * operator% (IOperand const &) const;
+	bool			 operator==(IOperand const &) const;
+	bool			 operator>=(IOperand const &) const;
+	bool			 operator<=(IOperand const &) const;
+	bool			 operator!=(IOperand const &) const;
+	bool			 operator> (IOperand const &) const;
+	bool			 operator< (IOperand const &) const;
 };
 
 

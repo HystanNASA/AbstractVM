@@ -1,0 +1,4 @@
+# ignore MSVC files
+*.vcxproj*
+Debug
+.gitignore

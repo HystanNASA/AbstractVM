@@ -18,7 +18,10 @@ private:
 
 public:
 	Factory(void);
+	Factory(Factory const &src);
 	~Factory(void);
+
+	Factory &operator=(Factory const &rhs);
 
 	IOperand const * createOperand(eOperandType, std::string const &) const;
 

@@ -24,10 +24,10 @@ void Lexer::getFilename(std::string& filename)
 }
 
 
-unsigned int Lexer::getLine(void) { return lineNumber; }
+unsigned int Lexer::getLine(void) const { return lineNumber; }
 
 
-Lexer::Instruction Lexer::getInstruction(void)
+Instruction Lexer::getInstruction(void)
 {
 	return instruction;
 }
@@ -160,4 +160,17 @@ std::string Lexer::translateMessage()
 		return std::string("Not An Instruction");
 	else
 		return std::string("Unknown Error");
+}
+
+
+LexerMessage Lexer::openFile(std::string const & filename)
+{
+	readFile.open(filename);
+
+	if (!readFile.is_open())
+	{
+		internalMessage = LexerMessage::badFile;
+		return internalMessage;
+	}
+		return LexerMessage::noError;
 }

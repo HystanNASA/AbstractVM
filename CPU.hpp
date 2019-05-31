@@ -1,14 +1,14 @@
 #ifndef CPU_HPP
 #define CPU_HPP
 
-#include <array>
+
 #include <iostream>
 #include <cstdlib>
 
 #include "IOperand.hpp"
 #include "eOperand.hpp"
-#include "Factory.hpp"
 #include "Lexer.hpp"
+#include "Factory.hpp"
 
 
 #define PRINT_ERROR_MESSAGE(str) std::cout << str << std::endl;
@@ -18,9 +18,7 @@ const unsigned SIZE_OF_STACK = 15;
 class CPU
 {
 private:
-	std::vector<IOperand> stack;
-	unsigned short		  stackPointer;
-	size_t				  programPointer;
+	std::vector<IOperand const *> stack;
 
 	Factory factory;
 	Lexer lexer;
@@ -31,18 +29,18 @@ public:
 	~CPU(void);
 
 	void run(void);
-	bool doInstruction(Instruction const& const, const unsigned line);
+	bool doInstruction(Instruction const &, const unsigned);
 
-	bool push(eOperandType, std::string const &, const unsigned line);
-	bool pop(const unsigned line);
-	bool dump(const unsigned line);
-	bool assert(eOperandType, std::string const &, const unsigned line);
-	bool add(const unsigned line);
-	bool sub(const unsigned line);
-	bool mul(const unsigned line);
-	bool div(const unsigned line);
-	bool mod(const unsigned line);
-	bool print(const unsigned line);
+	void push(eOperandType, std::string const &, const unsigned);
+	void pop(const unsigned);
+	void dump(const unsigned);
+	void assert(eOperandType, std::string const &, const unsigned);
+	void add(const unsigned);
+	void sub(const unsigned);
+	void mul(const unsigned);
+	void div(const unsigned);
+	void mod(const unsigned);
+	void print(const unsigned);
 	void exit(void) const;
 };
 

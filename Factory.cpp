@@ -10,7 +10,22 @@ Factory::Factory(void)
 }
 
 
+Factory::Factory(Factory const &src)
+{
+	*this = src;
+}
+
+
 Factory::~Factory(void) {}
+
+
+Factory & Factory::operator=(Factory const &rhs)
+{
+	if (this != &rhs)
+		this->functions = rhs.functions;
+
+	return *this;
+}
 
 
 IOperand const * Factory::createOperand(eOperandType type, std::string const & value) const
@@ -72,7 +87,7 @@ IOperand const * Factory::createInt32(std::string const & value) const
 		else if (num < -INT32_MAX)
 			throw std::underflow_error("Underflow");
 
-		return (new eOperand<int32_t>(static_cast<int16_t>(num)));
+		return (new eOperand<int32_t>(static_cast<int32_t>(num)));
 	}
 	catch (const std::exception e)
 	{

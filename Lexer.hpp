@@ -9,7 +9,6 @@
 #include <regex>
 
 #include "IOperand.hpp"
-#include "CPU.hpp"
 
 enum class InstructionType
 {
@@ -45,7 +44,7 @@ struct Instruction
 class Lexer
 {
 private:
-	const std::streamsize bufferSize = 128;
+	const unsigned bufferSize = 128;
 	std::ifstream readFile;
 
 	Instruction instruction;
@@ -62,8 +61,9 @@ public:
 
 	LexerMessage  findInstruction(void);
 	Instruction	  getInstruction(void);
-	unsigned int  getLine(void);
-	std::string translateMessage();
+	unsigned int  getLine(void) const;
+	std::string   translateMessage();
+	LexerMessage  openFile(std::string const &);
 
 private:
 	void getFilename(std::string&);
