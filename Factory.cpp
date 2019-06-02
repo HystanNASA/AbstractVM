@@ -101,7 +101,7 @@ IOperand const * Factory::createFloat(std::string const & value) const
 {
 	try
 	{
-		int64_t num = std::stoll(value);
+		float num = std::stof(value);
 
 		if (num > FLT_MAX)
 			throw std::overflow_error("Overflow");
@@ -122,7 +122,7 @@ IOperand const * Factory::createDouble(std::string const & value) const
 {
 	try
 	{
-		int64_t num = std::stoll(value);
+		double num = std::stod(value);
 
 		if (num > DBL_MAX)
 			throw std::overflow_error("Overflow");

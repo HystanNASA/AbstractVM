@@ -28,7 +28,9 @@ void CPU::run(void)
 	{
 		lexerMessage = lexer.findInstruction();
 
-		if (lexerMessage != LexerMessage::noError)
+		if (lexerMessage == LexerMessage::eof)
+			return;
+		else if (lexerMessage != LexerMessage::noError)
 		{
 			PRINT_ERROR_MESSAGE("Lexer Error: " + lexer.translateMessage())
 			std::exit(1);
@@ -126,6 +128,8 @@ void CPU::assert(eOperandType oType, std::string const & value, const unsigned l
 		PRINT_ERROR_MESSAGE("Error: Assert isn't true!\nLine: " + line)
 		std::exit(1);
 	}
+	else
+		std::cout << "true" << std::endl;
 }
 
 

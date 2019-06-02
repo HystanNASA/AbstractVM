@@ -43,7 +43,6 @@ void Lexer::readLine(void)
 
 	for(; !readFile.eof(); ++lineNumber)
 	{
-		//readFile.getline(&lineFromFile[0], bufferSize);
 		std::getline(readFile, lineFromFile);
 
 		if (lineFromFile[0] != ';' && lineFromFile != "")

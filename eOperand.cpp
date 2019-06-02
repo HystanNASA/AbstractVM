@@ -191,9 +191,9 @@ bool eOperand<T>::operator!=(IOperand const & rhs) const
 	if (eType < Float)
 		return (static_cast<int32_t>(value) != std::stoi(rhs.toString()));
 	else if (eType == Float)
-		return (static_cast<float>(value) != std::stoi(rhs.toString()));
+		return (static_cast<float>(value) != std::stof(rhs.toString()));
 	else
-		return (static_cast<int32_t>(value) != std::stoi(rhs.toString()));
+		return (static_cast<double>(value) != std::stod(rhs.toString()));
 }
 
 
@@ -208,9 +208,9 @@ bool eOperand<T>::operator>(IOperand const & rhs) const
 	if (eType < Float)
 		return (static_cast<int32_t>(value) > std::stoi(rhs.toString()));
 	else if (eType == Float)
-		return (static_cast<float>(value) > std::stoi(rhs.toString()));
+		return (static_cast<float>(value) > std::stof(rhs.toString()));
 	else
-		return (static_cast<int32_t>(value) > std::stoi(rhs.toString()));
+		return (static_cast<double>(value) > std::stod(rhs.toString()));
 }
 
 
@@ -225,9 +225,9 @@ bool eOperand<T>::operator<(IOperand const & rhs) const
 	if (eType < Float)
 		return (static_cast<int32_t>(value) < std::stoi(rhs.toString()));
 	else if (eType == Float)
-		return (static_cast<float>(value) < std::stoi(rhs.toString()));
+		return (static_cast<float>(value) < std::stof(rhs.toString()));
 	else
-		return (static_cast<int32_t>(value) < std::stoi(rhs.toString()));
+		return (static_cast<double>(value) < std::stod(rhs.toString()));
 }
 
 
@@ -265,6 +265,7 @@ std::string const & eOperand<T>::getStringValue(void) const
 template<typename T>
 std::string const & eOperand<T>::toString(void) const
 {
+	return valueInString;
 	return valueInString;
 }
 
