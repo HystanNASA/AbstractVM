@@ -43,9 +43,10 @@ void Lexer::readLine(void)
 
 	for(; !readFile.eof(); ++lineNumber)
 	{
-		readFile.getline(&lineFromFile[0], bufferSize);
+		//readFile.getline(&lineFromFile[0], bufferSize);
+		std::getline(readFile, lineFromFile);
 
-		if (lineFromFile[0] != ';')
+		if (lineFromFile[0] != ';' && lineFromFile != "")
 			break;
 	}
 
@@ -85,15 +86,15 @@ InstructionType Lexer::instructionToString(std::string const & instr) const
 
 eOperandType Lexer::operandToString(std::string const & operand)
 {
-	if (operand == "int8()")
+	if (operand == "int8")
 		return eOperandType::Int8;
-	else if (operand == "int16()")
+	else if (operand == "int16")
 		return eOperandType::Int16;
-	else if (operand == "int32()")
+	else if (operand == "int32")
 		return eOperandType::Int32;
-	else if (operand == "float()")
+	else if (operand == "float")
 		return eOperandType::Float;
-	else if (operand == "double()")
+	else if (operand == "double")
 		return eOperandType::Double;
 	else
 	{
@@ -111,21 +112,25 @@ void Lexer::parse(void)
 	const std::regex emptyLine("^\\s*$");
 	std::smatch		 result;
 
-	if (std::regex_match(lineFromFile, result, commandsWithoutArgs) || std::regex_match(lineFromFile, result, emptyLine))
+	if (std::regex_match(lineFromFile, result, commandsWithoutArgs))
 	{
-		instruction.instructionType = instructionToString(result[0]);
+		instruction.instructionType = instructionToString(result[1]);
 	}
 	else if (std::regex_match(lineFromFile, result, commandsWithArgsInt))
 	{
-		instruction.instructionType = instructionToString(result[0]);
-		instruction.operandType = operandToString(result[1]);
-		instruction.value = result[2].str();
+		instruction.instructionType = instructionToString(result[1]);
+		instruction.operandType = operandToString(result[2]);
+		instruction.value = result[3].str();
 	}
 	else if (std::regex_match(lineFromFile, result, commandsWithArgsFloatDouble))
 	{
+		instruction.instructionType = instructionToString(result[1]);
+		instruction.operandType = operandToString(result[2]);
+		instruction.value = result[3].str();
+	}
+	else if (std::regex_match(lineFromFile, result, emptyLine))
+	{
 		instruction.instructionType = instructionToString(result[0]);
-		instruction.operandType = operandToString(result[1]);
-		instruction.value = result[2].str();
 	}
 	else
 		internalMessage = LexerMessage::NAI;

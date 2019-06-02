@@ -47,13 +47,11 @@ void CPU::run(void)
 
 bool CPU::doInstruction(Instruction const & instruction, const unsigned line)
 {
-	bool flag = false;
-
 	if (instruction.instructionType == InstructionType::push)
 		push(instruction.operandType, instruction.value, line);
 	else if (instruction.instructionType == InstructionType::pop)
 		pop(line);
-	else if(instruction.instructionType == InstructionType::dump)
+	else if (instruction.instructionType == InstructionType::dump)
 		dump(line);
 	else if (instruction.instructionType == InstructionType::assert)
 		assert(instruction.operandType, instruction.value, line);
@@ -74,7 +72,7 @@ bool CPU::doInstruction(Instruction const & instruction, const unsigned line)
 	else
 		return false;
 
-	return flag;
+	return true;
 }
 
 
@@ -263,5 +261,6 @@ void CPU::print(const unsigned line)
 
 void CPU::exit(void) const
 {
+	system("pause");
 	std::exit(0);
 }
