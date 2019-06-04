@@ -1,4 +1,5 @@
 # ignore MSVC files
 *.vcxproj*
 Debug
+Release
 .gitignore
