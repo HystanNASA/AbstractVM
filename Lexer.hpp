@@ -2,6 +2,7 @@
 #define PARSER_HPP
 
 
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -49,7 +50,7 @@ private:
 
 	Instruction instruction;
 
-	std::string lineFromFile;
+	std::string instructionInStringForm;
 	unsigned int lineNumber;
 
 	LexerMessage internalMessage;
@@ -60,6 +61,7 @@ public:
 	~Lexer(void);
 
 	LexerMessage  findInstruction(void);
+	LexerMessage  findInstruction(std::string&);
 	Instruction	  getInstruction(void);
 	unsigned int  getLine(void) const;
 	std::string   translateMessage();

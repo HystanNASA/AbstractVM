@@ -15,10 +15,19 @@
 
 const unsigned SIZE_OF_STACK = 15;
 
+
+enum class ProgramMode
+{
+	FromStandardInputMode = 0,
+	FromFileMode
+};
+
+
 class CPU
 {
 private:
 	std::vector<IOperand const *> stack;
+	std::vector<std::string>	  commands;
 
 	Factory factory;
 	Lexer lexer;
@@ -29,6 +38,9 @@ public:
 	~CPU(void);
 
 	void run(void);
+	void readInput(void);
+
+private:
 	bool doInstruction(Instruction const &, const unsigned);
 
 	void push(eOperandType, std::string const &, const unsigned);
@@ -42,6 +54,7 @@ public:
 	void mod(const unsigned);
 	void print(const unsigned);
 	void exit(void) const;
+
 };
 
 

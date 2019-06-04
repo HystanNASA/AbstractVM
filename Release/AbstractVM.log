@@ -1,0 +1,9 @@
+﻿  CPU.cpp
+  eOperand.cpp
+  Factory.cpp
+  main.cpp
+  Lexer.cpp
+  Generating code
+  All 1400 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  AbstractVM.vcxproj -> D:\C++ Projects\AbstractVM\Release\AbstractVM.exe

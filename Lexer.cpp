@@ -2,7 +2,7 @@
 
 Lexer::Lexer(void) : lineNumber(0), internalMessage(LexerMessage::noError)
 {
-	lineFromFile.reserve(bufferSize);
+	instructionInStringForm.reserve(bufferSize);
 }
 
 
@@ -43,9 +43,9 @@ void Lexer::readLine(void)
 
 	for(; !readFile.eof(); ++lineNumber)
 	{
-		std::getline(readFile, lineFromFile);
+		std::getline(readFile, instructionInStringForm);
 
-		if (lineFromFile[0] != ';' && lineFromFile != "")
+		if (instructionInStringForm == ";;" || instructionInStringForm[0] != ';' && instructionInStringForm != "")
 			break;
 	}
 
@@ -111,23 +111,23 @@ void Lexer::parse(void)
 	const std::regex emptyLine("^\\s*$");
 	std::smatch		 result;
 
-	if (std::regex_match(lineFromFile, result, commandsWithoutArgs))
+	if (std::regex_match(instructionInStringForm, result, commandsWithoutArgs))
 	{
 		instruction.instructionType = instructionToString(result[1]);
 	}
-	else if (std::regex_match(lineFromFile, result, commandsWithArgsInt))
-	{
-		instruction.instructionType = instructionToString(result[1]);
-		instruction.operandType = operandToString(result[2]);
-		instruction.value = result[3].str();
-	}
-	else if (std::regex_match(lineFromFile, result, commandsWithArgsFloatDouble))
+	else if (std::regex_match(instructionInStringForm, result, commandsWithArgsInt))
 	{
 		instruction.instructionType = instructionToString(result[1]);
 		instruction.operandType = operandToString(result[2]);
 		instruction.value = result[3].str();
 	}
-	else if (std::regex_match(lineFromFile, result, emptyLine))
+	else if (std::regex_match(instructionInStringForm, result, commandsWithArgsFloatDouble))
+	{
+		instruction.instructionType = instructionToString(result[1]);
+		instruction.operandType = operandToString(result[2]);
+		instruction.value = result[3].str();
+	}
+	else if (std::regex_match(instructionInStringForm, result, emptyLine))
 	{
 		instruction.instructionType = instructionToString(result[0]);
 	}
@@ -145,8 +145,15 @@ LexerMessage Lexer::findInstruction(void)
 
 	parse();
 
-	if (internalMessage != LexerMessage::noError)
-		return internalMessage;
+	return internalMessage;
+}
+
+
+LexerMessage Lexer::findInstruction(std::string& command)
+{
+	instructionInStringForm = command;
+
+	parse();
 
 	return internalMessage;
 }

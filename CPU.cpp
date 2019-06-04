@@ -24,9 +24,20 @@ void CPU::run(void)
 	Instruction instruction;
 	LexerMessage lexerMessage;
 
+	unsigned indexOfCommand = 0;
+
 	while (true)
 	{
-		lexerMessage = lexer.findInstruction();
+		if(commands.size() == 0)
+			lexerMessage = lexer.findInstruction();
+		else
+		{
+			if (indexOfCommand == commands.size())
+				std::exit(0);
+
+			lexerMessage = lexer.findInstruction(commands[indexOfCommand]);
+			++indexOfCommand;
+		}
 
 		if (lexerMessage == LexerMessage::eof)
 			return;
@@ -260,6 +271,23 @@ void CPU::print(const unsigned line)
 	}
 
 	std::cout << stack[stack.size() - 1]->getStringValue() << std::endl;
+}
+
+
+void CPU::readInput(void)
+{
+	bool		continueInput = true;
+	std::string input;
+
+	while (continueInput)
+	{
+		std::getline(std::cin, input);
+
+		if(input == ";;")
+			continueInput = false;
+		else
+			commands.push_back(input);
+	}
 }
 
 
